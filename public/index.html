@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Biblioteca</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Sistema de Biblioteca</h1>
+            <nav>
+                <button class="nav-btn active" data-section="dashboard">Dashboard</button>
+                <button class="nav-btn" data-section="livros">Livros</button>
+                <button class="nav-btn" data-section="leitores">Leitores</button>
+                <button class="nav-btn" data-section="emprestimos">Empréstimos</button>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Dashboard -->
+            <section id="dashboard" class="section active">
+                <h2>Dashboard</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Total de Livros</h3>
+                        <p class="stat-number" id="total-livros">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total de Leitores</h3>
+                        <p class="stat-number" id="total-leitores">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Empréstimos Ativos</h3>
+                        <p class="stat-number" id="emprestimos-ativos">0</p>
+                    </div>
+                    <div class="stat-card alert">
+                        <h3>Devoluções Atrasadas</h3>
+                        <p class="stat-number" id="devolucoes-atrasadas">0</p>
+                    </div>
+                </div>
+                
+                <div class="recent-section">
+                    <h3>Empréstimos Recentes</h3>
+                    <div id="emprestimos-recentes" class="recent-list"></div>
+                </div>
+            </section>
+
+            <!-- Livros -->
+            <section id="livros" class="section">
+                <div class="section-header">
+                    <h2>Gerenciar Livros</h2>
+                    <button class="btn btn-primary" onclick="openModal('modal-livro')">Adicionar Livro</button>
+                </div>
+                
+                <div class="search-bar">
+                    <input type="text" id="search-livros" placeholder="Buscar livros...">
+                </div>
+                
+                <div class="table-container">
+                    <table id="table-livros">
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                                <th>Autor</th>
+                                <th>ISBN</th>
+                                <th>Categoria</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Leitores -->
+            <section id="leitores" class="section">
+                <div class="section-header">
+                    <h2>Gerenciar Leitores</h2>
+                    <button class="btn btn-primary" onclick="openModal('modal-leitor')">Adicionar Leitor</button>
+                </div>
+                
+                <div class="search-bar">
+                    <input type="text" id="search-leitores" placeholder="Buscar leitores...">
+                </div>
+                
+                <div class="table-container">
+                    <table id="table-leitores">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Telefone</th>
+                                <th>Endereço</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Empréstimos -->
+            <section id="emprestimos" class="section">
+                <div class="section-header">
+                    <h2>Gerenciar Empréstimos</h2>
+                    <button class="btn btn-primary" onclick="openModal('modal-emprestimo')">Novo Empréstimo</button>
+                </div>
+                
+                <div class="table-container">
+                    <table id="table-emprestimos">
+                        <thead>
+                            <tr>
+                                <th>Livro</th>
+                                <th>Leitor</th>
+                                <th>Data Empréstimo</th>
+                                <th>Devolução Prevista</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modais -->
+    <!-- Modal Livro -->
+    <div id="modal-livro" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-livro-title">Adicionar Livro</h3>
+                <span class="close" onclick="closeModal('modal-livro')">&times;</span>
+            </div>
+            <form id="form-livro">
+                <input type="hidden" id="livro-id">
+                <div class="form-group">
+                    <label for="livro-titulo">Título:</label>
+                    <input type="text" id="livro-titulo" required>
+                </div>
+                <div class="form-group">
+                    <label for="livro-autor">Autor:</label>
+                    <input type="text" id="livro-autor" required>
+                </div>
+                <div class="form-group">
+                    <label for="livro-isbn">ISBN:</label>
+                    <input type="text" id="livro-isbn">
+                </div>
+                <div class="form-group">
+                    <label for="livro-categoria">Categoria:</label>
+                    <input type="text" id="livro-categoria">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('modal-livro')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Leitor -->
+    <div id="modal-leitor" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-leitor-title">Adicionar Leitor</h3>
+                <span class="close" onclick="closeModal('modal-leitor')">&times;</span>
+            </div>
+            <form id="form-leitor">
+                <input type="hidden" id="leitor-id">
+                <div class="form-group">
+                    <label for="leitor-nome">Nome:</label>
+                    <input type="text" id="leitor-nome" required>
+                </div>
+                <div class="form-group">
+                    <label for="leitor-email">Email:</label>
+                    <input type="email" id="leitor-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="leitor-telefone">Telefone:</label>
+                    <input type="text" id="leitor-telefone">
+                </div>
+                <div class="form-group">
+                    <label for="leitor-endereco">Endereço:</label>
+                    <textarea id="leitor-endereco"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('modal-leitor')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Empréstimo -->
+    <div id="modal-emprestimo" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Novo Empréstimo</h3>
+                <span class="close" onclick="closeModal('modal-emprestimo')">&times;</span>
+            </div>
+            <form id="form-emprestimo">
+                <div class="form-group">
+                    <label for="emprestimo-livro">Livro:</label>
+                    <select id="emprestimo-livro" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="emprestimo-leitor">Leitor:</label>
+                    <select id="emprestimo-leitor" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="emprestimo-dias">Dias para devolução:</label>
+                    <input type="number" id="emprestimo-dias" value="14" min="1" max="30">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('modal-emprestimo')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Realizar Empréstimo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
